@@ -10,7 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int argc, char **argv)
-{
+#include "libft.h"
+#include <stdio.h>
 
+//int main(int argc, char **argv)
+int main(void)
+{
+    int num = 23;
+    char *str = "Love you 2";
+
+    printf("The following lines present the answer to the use of printf vs ft_printf\n\n");
+    printf("-- printf --\n\n");
+    printf("The num int is -%i- and its digit is -%d-\nThe string gives a char equal to %c, while its string is %s;\n\n", num, num, str, str);
+    printf("-- ft_printf --\n\n");
+    ft_printf("The num int is -%i- and its digit is -%d-\nThe string gives a char equal to %c, while its string is %s;\n\n", num, num, str, str);
+    return (0);
 }

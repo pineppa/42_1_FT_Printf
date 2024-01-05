@@ -9,4 +9,6 @@ int ft_putnbr(int n);
 int ft_puthex(unsigned int nbr, int uppercase);
 int ft_putpointer(void *p);
 
+int	ft_printf(const char *str, ...);
+
 #endif
