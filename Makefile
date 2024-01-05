@@ -1,9 +1,15 @@
 
 ROOT_DIR = $(shell pwd)
 
-SRCS	= ft_printf.c
+SRCS	= ft_printf.c ft_putstrs.c ft_putnbrs.c
 
-SRC_FILES = $(addprefix $(ROOT_DIR)/, $(SRCS))
+SRC_FILES = $(addprefix $(ROOT_DIR)/srcs/, $(SRCS))
+
+HS = libft.h
+
+H_FILES = $(addprefix $(ROOT_DIR)/includes/, $(HS))
+
+HS_DIR = $(ROOT_DIR)/includes/
 
 O_FILES = $(SRC_FILES:.c=.o)
 
@@ -16,7 +22,7 @@ OUT_DIR = $(ROOT_DIR)
 all : $(NAME)
 
 .c.o:
-	gcc ${C_FLAGS} -c -I ${ROOT_DIR} $< -o ${<:.c=.o}
+	gcc ${C_FLAGS} -c -I ${HS_DIR} $< -o ${<:.c=.o}
 
 $(NAME) : $(O_FILES)
 	ar -cr $(NAME) $(O_FILES)
@@ -26,6 +32,9 @@ clean :
 
 fclean : clean
 	rm -f $(NAME)
+
+test : 
+	gcc ./srcs/* ./tests/main.c ./includes/libft.h 
 	
 re : fclean all
 

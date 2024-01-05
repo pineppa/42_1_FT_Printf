@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstrs.c                                       :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsala <jacopo.sala@student.barcelona.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/04 20:28:59 by jsala             #+#    #+#             */
-/*   Updated: 2024/01/05 16:47:39 by jsala            ###   ########.fr       */
+/*   Created: 2024/01/05 14:10:31 by jsala             #+#    #+#             */
+/*   Updated: 2024/01/05 16:49:26 by jsala            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-int	ft_putchar(int c)
-{
-	write(1, &c, 1);
-	return (1);
-}
+# include <stdarg.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-int	ft_putstr(char *s)
-{
-	int	i;
+int	ft_putchar(int c);
+int	ft_putstr(char *s);
+int	ft_putnbr(int n);
+int	ft_putunbr(int n);
+int	ft_puthex(unsigned long int nbr, char x);
+int	ft_putpointer(void *p);
 
-	i = -1;
-	while (s[++i])
-		write(1, &s[i], 1);
-	return (i);
-}
+int	ft_printf(const char *str, ...);
+
+#endif
