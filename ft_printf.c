@@ -10,26 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
 #include "libft.h"
 
-
-void	print_case(char c, va_list ap)
+int	ft_print_basecase(char c, va_list ap)
 {
 	if (c == 'c')
-		ft_putchar(va_arg(ap, char));
-	if (c == 's')
-		ft_putstr(va_arg(ap, char *));
-	if (c == 'p')
-		ft_putpointer(va_arg(ap, void *));
-	if (c == 'd' || c == 'i' || c == 'u')
-		ft_putnbr(va_arg(ap, int));
-	if (c == 'x' || c == 'X' )
-		ft_puthex(va_arg(ap, int));
-
+		return (ft_putchar(va_arg(ap, char)));
+	else if (c == 's')
+		return (ft_putstr(va_arg(ap, char *)));
+	else if (c == 'p')
+		return (ft_putpointer(va_arg(ap, void *)));
+	else if (c == 'd' || c == 'i' || c == 'u')
+		return (ft_putnbr(va_arg(ap, int)));
+	else if (c == 'x' || c =='X')
+		return (ft_puthex(va_arg(ap, unsigned int), c));
 }
 
-void	print_specialcase(char c, va_list ap)
+int	ft_print_specialcase(char c, va_list ap)
 {
 	if (c == '-')
 		;
@@ -59,8 +56,8 @@ int	ft_printf(const char *str, ...)
 	{
 		if (str[i] == '%')
 		{
-			ft_print_case(str[++i], ap);
-			print_count += count_printed(str[i], print_count);
+			print_count += ft_print_basecase(str[++i], ap);
+			print_count += ft_print_specialcase(str[i], ap);
 			i++;
 			continue;
 		}
