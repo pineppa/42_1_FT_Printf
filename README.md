@@ -28,7 +28,7 @@ Variadic functions allow a variable amount of arguments with variable types.
 
 They must have a first argument clearly defined followed by three dots <code>...</code>
 
-Differently than the more common <code>char **argv</code> used in <code>int main</code>, the use of variadic functions 
+Differently than the more common <code>char **argv</code> used in <code>int main</code>, the use of variadic functions allows to pass variables of different types. Based on the function itself, the variable type must be correctly handled. In the case of printf, for example, this is done via the keychar <code>%</code> followed by a series of values accordingly. But... more about printf later now let's dive into the &lt;stdarg.h&gt; library!
 
 <span style="text-align:center;">
 
@@ -125,6 +125,6 @@ The <span style="color: #f0f;">data_type/format</span> of the argument signals t
 * <span style="color:#cf0;">***%X***</span> - Prints a number in hexadecimal (base 16) uppercase format.
 * <span style="color:#cf0;">***%%***</span> - Prints a percent sign.
 
-### :muscle: Advanced cases
+### :muscle: Advanced cases - Not yet implemented
 
 * 
