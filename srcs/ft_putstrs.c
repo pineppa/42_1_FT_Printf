@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstrs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsala <jacopo.sala@student.barcelona.co    +#+  +:+       +#+        */
+/*   By: jsala <jsala@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 20:28:59 by jsala             #+#    #+#             */
-/*   Updated: 2024/01/05 16:47:39 by jsala            ###   ########.fr       */
+/*   Updated: 2024/01/12 12:10:15 by jsala            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/ft_printf.h"
 
 int	ft_putchar(int c)
 {
@@ -23,6 +23,11 @@ int	ft_putstr(char *s)
 	int	i;
 
 	i = -1;
+	if (!s)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
 	while (s[++i])
 		write(1, &s[i], 1);
 	return (i);

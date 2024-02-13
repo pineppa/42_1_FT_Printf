@@ -7,7 +7,11 @@ Because putchar, putstr and putnbr are not enough.
 
 ---
 
+<span style="text-align:center; color: #2b2;">
 
+Project passed: 100/100
+
+</span>
 
 ---
 
@@ -15,20 +19,23 @@ Because putchar, putstr and putnbr are not enough.
 
 ## :wrench: Prototype
 
-<code>void ft_printf(const char *str, ...);</code>
+```
+void ft_printf(const char *str, ...);
+```
 
 ## :mortar_board: Learning variadic functions
 
 </span>
-Requirement: <code>#include &lt;stdarg.h&gt;</code>
 
-Prototype structure: <code>return_type function_name(data_type arg1, ...);</code>
+Requirement: `#include <stdarg.h>`
 
-Variadic functions allow a variable amount of arguments with variable types. 
+Prototype structure: `return_type function_name(data_type arg1, ...);`
 
-They must have a first argument clearly defined followed by three dots <code>...</code>
+Variadic functions allow a variable amount of arguments with variable types.
 
-Differently than the more common <code>char **argv</code> used in <code>int main</code>, the use of variadic functions allows to pass variables of different types. Based on the function itself, the variable type must be correctly handled. In the case of printf, for example, this is done via the keychar <code>%</code> followed by a series of values accordingly. But... more about printf later now let's dive into the &lt;stdarg.h&gt; library!
+They must have a first argument clearly defined followed by three dots `...`
+
+Differently than the more common `char **argv` used in `int main`, the use of variadic functions allows to pass variables of different types. Based on the function itself, the variable type must be correctly handled. In the case of printf, for example, this is done via the keychar `%` followed by a series of values accordingly. But... more about printf later now let's dive into the `stdarg.h` library!
 
 <span style="text-align:center;">
 
@@ -125,6 +132,42 @@ The <span style="color: #f0f;">data_type/format</span> of the argument signals t
 * <span style="color:#cf0;">***%X***</span> - Prints a number in hexadecimal (base 16) uppercase format.
 * <span style="color:#cf0;">***%%***</span> - Prints a percent sign.
 
-### :muscle: Advanced cases - Not yet implemented
+## 💡 A very interesting behviour:
 
-* 
+With the common flags used to compile a project at 42 (`-Wall`, `-Wextra`, `-Werror`), it is possible to compile and pass a wrong implementation of printf:
+
+```
+printf("Hello %zzzzzzzzz World", str);
+```
+
+This would usually be caught by the `-Wformat` flag, but in this case it seems to pass an undefined behaviour. The use of `'z'` is done on purpose as it is not one of the characters handled by printf. In this case, printf's implementation will stop at the `'%'` to assess what it needs to print. Since `'z'` is not among the parameters he knows how to handle, it searches further until it encounters a character
+
+### :muscle: Advanced cases - Not implemented
+
+<span style="color:#b00;">Bonus list:</span>
+
+* Manage any combination of the following flags:
+  * `-`
+  * `0`
+  * `.`
+  * Minimum field width under all conversions.
+
+*  Manage all the following flags:
+  * `#`:
+  * ` `: (Yes, one of them is a space)
+  * `+`:
+
+## Return values and Errors management ([Source: IBM](https://www.ibm.com/docs/en/i/7.2?topic=functions-printf-print-formatted-characters#d60922e1872))
+
+Whenever printf fails, it should return a negative value. The possible errors number `errno` are
+
+* `Value`: Meaning
+* `EBADMODE`: The file mode that is specified is not valid.
+* `ECONVERT`: A conversion error occurred.
+* `EIOERROR`: A non-recoverable I/O error occurred.
+* `EIORECERR`: A recoverable I/O error occurred.
+* `EILSEQ`: An invalid multibyte character sequence was encountered.
+* `EPUTANDGET`: An illegal write operation occurred after a read operation.
+* `ESTDOUT`: stdout cannot be opened
+
+Most of these errors are generated in the case of a bad buffer management, or reading. In the mandatory cases is quite difficult to generate printf crashes that are not connected with I/O errors or when a file is involved.

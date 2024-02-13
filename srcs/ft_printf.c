@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsala <jacopo.sala@student.barcelona.co    +#+  +:+       +#+        */
+/*   By: jsala <jsala@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 10:16:56 by jsala             #+#    #+#             */
-/*   Updated: 2024/01/05 16:37:30 by jsala            ###   ########.fr       */
+/*   Updated: 2024/01/12 12:16:48 by jsala            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/ft_printf.h"
 
 int	ft_print_basecase(char c, va_list ap)
 {
@@ -25,35 +25,18 @@ int	ft_print_basecase(char c, va_list ap)
 	else if (c == 'u')
 		return (ft_putunbr(va_arg(ap, unsigned int)));
 	else if (c == 'x' || c == 'X')
-		return (ft_puthex(va_arg(ap, unsigned long int), c));
+		return (ft_puthex(va_arg(ap, unsigned int), c));
 	else if (c == '%')
 		return (ft_putchar('%'));
-	return (0);
+	return (-1);
 }
-
-/*
-int	ft_print_specialcase(char c, va_list ap)
-{
-	if (c == '-')
-		;
-	if (c == 'O')
-		;
-	if (c == '.')
-		;
-	if (c == ' ')
-		;
-	if (c == '#')
-		;
-	if (c == '+')
-		;
-}
-*/
 
 int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
 	int		i;
 	int		print_count;
+	int		len_print;
 
 	va_start(ap, str);
 	i = 0;
@@ -62,13 +45,14 @@ int	ft_printf(const char *str, ...)
 	{
 		if (str[i] == '%')
 		{
-			print_count += ft_print_basecase(str[++i], ap);
-			//print_count += ft_print_specialcase(str[i], ap);
+			len_print = -1;
+			while (len_print == -1)
+				len_print = ft_print_basecase(str[++i], ap);
+			print_count += len_print;
 			i++;
 			continue ;
 		}
-		write(1, &str[i], 1);
-		i++;
+		write(1, &str[i++], 1);
 		print_count++;
 	}
 	va_end(ap);

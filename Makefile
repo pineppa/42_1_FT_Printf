@@ -1,41 +1,43 @@
+# Directories & files
 
-ROOT_DIR = $(shell pwd)
+SRCS = ./srcs/ft_printf.c ./srcs/ft_putstrs.c ./srcs/ft_putnbrs.c
+D_SRCS = ${SRCS:.c=.d}
 
-SRCS	= ft_printf.c ft_putstrs.c ft_putnbrs.c
+HS = ./includes/ft_printf.h
+D_HS = ${HS:.c=.d}
 
-SRC_FILES = $(addprefix $(ROOT_DIR)/srcs/, $(SRCS))
+# .o objects creation and definition
+O_FILES = $(SRCS:.c=.o)
 
-HS = libft.h
-
-H_FILES = $(addprefix $(ROOT_DIR)/includes/, $(HS))
-
-HS_DIR = $(ROOT_DIR)/includes/
-
-O_FILES = $(SRC_FILES:.c=.o)
+# Variables and main commands
 
 NAME = libftprintf.a
+C_FLAGS = -Wall -Wextra -Werror
+AR = ar crs
+OUT_DIR = .
 
-C_FLAGS = -Wall -Wextra -Werror 
-
-OUT_DIR = $(ROOT_DIR)
+# Rules
 
 all : $(NAME)
 
-.c.o:
-	gcc ${C_FLAGS} -c -I ${HS_DIR} $< -o ${<:.c=.o}
+-include $(D_SRCS) $(D_HS)
 
-$(NAME) : $(O_FILES)
-	ar -cr $(NAME) $(O_FILES)
+.c.o:
+	gcc ${C_FLAGS} -c $< -I $(HS) -MMD -MP -o ${<:.c=.o}
+
+$(NAME) : libft $(O_FILES)
+	$(AR) $(NAME) $(O_FILES)
 
 clean :
-	rm -f $(O_FILES) $(O_BONUS)
+	rm -f $(O_FILES) $(D_SRCS) $(D_HS)
 
 fclean : clean
 	rm -f $(NAME)
 
-test : 
-	gcc ./srcs/* ./tests/main.c ./includes/libft.h 
-	
+test : fclean
+	gcc ./srcs/* ./includes/ft_printf.h ./tests/main.c
+	make clean
+
 re : fclean all
 
 .PHONY: all clean fclean re

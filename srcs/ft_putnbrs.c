@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbrs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsala <jacopo.sala@student.barcelona.co    +#+  +:+       +#+        */
+/*   By: jsala <jsala@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 20:28:59 by jsala             #+#    #+#             */
-/*   Updated: 2024/01/05 16:49:09 by jsala            ###   ########.fr       */
+/*   Updated: 2024/01/12 08:32:13 by jsala            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/ft_printf.h"
 
 int	ft_putnbr(int nb)
 {
@@ -57,7 +57,7 @@ int	ft_putunbr(int n)
 	return (count);
 }
 
-int	ft_puthex(unsigned long int nbr, char x)
+int	ft_puthex(unsigned int nbr, char x)
 {
 	int	count;
 
@@ -78,14 +78,33 @@ int	ft_puthex(unsigned long int nbr, char x)
 	return (count);
 }
 
+int	ft_putlonghex(unsigned long int nbr, char x)
+{
+	int	count;
+
+	count = 0;
+	if (nbr >= 16)
+	{
+		count += ft_putlonghex(nbr / 16, x);
+		nbr = nbr % 16;
+	}
+	if (nbr < 16)
+	{
+		if (x == 'x')
+			ft_putchar("0123456789abcdef"[nbr]);
+		else
+			ft_putchar("0123456789ABCDEF"[nbr]);
+		count++;
+	}
+	return (count);
+}
+
 int	ft_putpointer(void *p)
 {
 	unsigned long int	i;
 	unsigned int		count;
 
-	if (!p)
-		return (ft_putstr("(nil)"));
 	i = (unsigned long int)p;
-	count = ft_putstr("0x") + ft_puthex(i, 'x');
+	count = ft_putstr("0x") + ft_putlonghex(i, 'x');
 	return (count);
 }
