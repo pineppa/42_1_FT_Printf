@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../libft/libft.h"
+#include "../includes/ft_printf.h"
 #include <stdio.h>
 #include <limits.h>
 
